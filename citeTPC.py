@@ -38,20 +38,32 @@ listofnames = [
     #"Kenji Mase Nagoya University",
 ]
 
+def createOutputPage(htmltags):
+    """
+    takes the strings of the TPC results and makes a web page
+    """
+    print "\n".join(htmltags)
+    pass
+
 def searchForTPC(members):
     """takes a list of members, returns their papers"""
+    outputstrings = []
     for member in members:
-        print "Member:",member
+        outputstrings.append('<p>')
+        outputstrings.append('<div class="member">')
+        outputstrings.append( '<div class="membername">%s</div>' % member)
         member = member.replace(" ","+")
         for paper in findMembersPapers(member):
             try:
-                print paper.doi
-                print paper.hardlink
-                print "-"
+                outputstrings.append('<div class="paperdoi">%s</div>' % paper.doi)
+                if paper.hardlink:
+                    outputstrings.append('<div class="paperlink">%s</div>' % paper.hardlink)
+                outputstrings.append('</br>')
             except:
-                print "no links"
-        print "---"
-        print "---"
+                pass
+        outputstrings.append('</p>')
+        outputstrings.append('</div>')#close the member div
+    return outputstrings
 
 def findMembersPapers(memberString):
     """takes a member to search for, returns a list of html urls.
@@ -75,4 +87,4 @@ def findMembersPapers(memberString):
         results.append(p)
     return results
 
-searchForTPC(listofnames)
+createOutputPage(searchForTPC(listofnames))
