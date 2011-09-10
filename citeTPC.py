@@ -46,13 +46,6 @@ soup = BeautifulSoup(page)
 #print soup.prettify()
 #Parse and find the gs_r tags
 for cite in soup.findAll(name='div',attrs={"class" : paperContainer}):
-    #print cite.prettify()
-    print cite.div #contains the link to the paper page
-    #print cite.span #contains the link to the pdf hardcopy
-    if linkToPaper in cite.span['class']: # contains a link
-        print cite.span
-    #print cite.span.__dict__
-    #print cite.__dict__.keys()
-    print "----"
-    #TODO find the first subchild div gs_rt, get the name and the link out
-    #TODO if it has a 
+    print cite.div.a #contains the link to the paper page
+    if linkToPaper in cite.span['class']: # contains a link to the hardcopy
+        print cite.span.a
