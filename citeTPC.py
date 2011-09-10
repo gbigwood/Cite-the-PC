@@ -42,7 +42,12 @@ def createOutputPage(htmltags):
     """
     takes the strings of the TPC results and makes a web page
     """
-    print "\n".join(htmltags)
+    header = '<html><head><title>Papers to cite</title></head><body>'
+    body= "\n".join(htmltags)
+    footer = '</body></html>'
+    print header
+    print body
+    print footer
     pass
 
 def searchForTPC(members):
