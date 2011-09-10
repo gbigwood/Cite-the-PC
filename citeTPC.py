@@ -11,9 +11,10 @@ accepted at your conference.
 \___/      \_____________/
 """
 from BeautifulSoup import BeautifulSoup
+from collections import namedtuple
 
 #Make a container type for the pc members
-Member = namedtuple('PCMember', ['name', 'institution'], verbose=True)
+Member = namedtuple('PCMember', ['name', 'institution'])
 
 listofnames = [
 Member("Kevin Almeroth", "University of California"),
