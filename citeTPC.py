@@ -1,6 +1,8 @@
 """
 A program to obtain a list of all the papers that you need to cite to get
 accepted at your conference.
+
+Returns html 
  __
 /  \        _____________
 |  |       /             \
@@ -13,10 +15,12 @@ accepted at your conference.
 from BeautifulSoup import BeautifulSoup
 from collections import namedtuple
 import urllib2
-#The hardcoded strings for tags
+
+#The hardcoded strings for google scholar tags
 paperContainerString = "gs_r"
 linkToPaperString = "gs_ggs"
 citationString = "gs_ctu"
+
 #Create opener with Google-friendly user agent
 opener = urllib2.build_opener()
 opener.addheaders = [('User-agent', 'Mozilla/5.0')]
@@ -75,21 +79,24 @@ def findMembersPapers(memberString):
     
     the urls come as """
     url = "http://scholar.google.com/scholar?q="+memberString
-    page = opener.open(url)
-    soup = BeautifulSoup(page)
     results = [] #the result papers go in here
-    #print soup.prettify()
-    #Parse and find the gs_r tags
-    for cite in soup.findAll(name='div',attrs={"class" : paperContainerString}):
-        #pass
-        if linkToPaperString in cite.span['class']: # contains a link to the hardcopy
-            p = Paper(cite.div.a, cite.span.a)#we know there will be two links with data
-        elif citationString in cite.span['class']: #its a citation not a paper
-            #print "skipping",cite.div
-            continue
-        else:#no paper link
-            p = Paper(cite.div.a,None)
-        results.append(p)
+    try:
+        page = opener.open(url)
+        soup = BeautifulSoup(page)
+    except:#error
+        print "error with the search"
+    else:#if no error
+        #print soup.prettify()
+        #Parse and find the gs_r tags
+        for cite in soup.findAll(name='div',attrs={"class" : paperContainerString}):
+            if linkToPaperString in cite.span['class']: # contains a link to the hardcopy
+                p = Paper(cite.div.a, cite.span.a)#we know there will be two links with data
+            elif citationString in cite.span['class']: #its a citation not a paper
+                #print "skipping",cite.div
+                continue
+            else:#no paper link
+                p = Paper(cite.div.a,None)
+            results.append(p)
     return results
 
 createOutputPage(searchForTPC(listofnames))
