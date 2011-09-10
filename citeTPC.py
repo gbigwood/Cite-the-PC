@@ -18,34 +18,54 @@ paperContainer = "gs_r"
 linkToPaper = "gs_ggs"
 
 #Make a container type for the pc members
-Member = namedtuple('PCMember', ['name', 'institution'])
+Paper = namedtuple('Paper', ['doi', 'hardlink'])
 
-#who we are searching for
+#Who we are searching for
 listofnames = [
-    Member("Kevin Almeroth", "University of California"),
-    Member("Sun-Ki Chai", "University of Hawaii"),
-    Member("Adrian David Cheok", "National University of Singapore"),
-    Member("Noshir Contractor", "Northwestern University"),
-    Member("Irfan Essa", "Georgia Institute of Technology"),
-    Member("David Lazer", "Northeastern/Harvard University"),
-    Member("Dongman Lee", "KAIST"),
-    Member("Ramesh Jain", "University of California"),
-    Member("Tom Malone", "Massachusetts Institute of Technology"),
-    Member("Kenji Mase", "Nagoya University"),
+    "Kevin Almeroth University of California",
+    "Sun-Ki Chai University of Hawaii",
+    "Adrian David Cheok National University of Singapore",
+    "Noshir Contractor Northwestern University",
+    "Irfan Essa Georgia Institute of Technology",
+    "David Lazer Northeastern/Harvard University",
+    "Dongman Lee KAIST",
+    "Ramesh Jain University of California",
+    "Tom Malone Massachusetts Institute of Technology",
+    "Kenji Mase Nagoya University",
 ]
 
-### Create opener with Google-friendly user agent
-opener = urllib2.build_opener()
-opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+def searchForTPC(members):
+    """takes a list of members, returns their papers"""
+    for member in members:
+        member = member.replace(" ","+")
+        print member
+        for paper in findMembersPapers(member):
+            try:
+                for link in paper:
+                    print link
+            except:
+                print "no links"
+        print "---"
 
-url = "http://scholar.google.com/scholar?q=Kevin+Almeroth+University+of+California"
-page = opener.open(url)
-soup = BeautifulSoup(page)
+#Create opener with Google-friendly user agent
+def findMembersPapers(memberString):
+    """takes a member to search for, returns a list of html urls.
+    
+    the urls come as """
+    opener = urllib2.build_opener()
+    opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+    url = "http://scholar.google.com/scholar?q="+memberString
+    page = opener.open(url)
+    soup = BeautifulSoup(page)
+    results = [] #the result papers go in here
+    #print soup.prettify()
+    #Parse and find the gs_r tags
+    for cite in soup.findAll(name='div',attrs={"class" : paperContainer}):
+        if linkToPaper in cite.span['class']: # contains a link to the hardcopy
+            p = (cite.div.a, cite.span.a)
+        else:
+            p = (cite.div.a)
+        results.append(p)
+    return results
 
-
-#print soup.prettify()
-#Parse and find the gs_r tags
-for cite in soup.findAll(name='div',attrs={"class" : paperContainer}):
-    print cite.div.a #contains the link to the paper page
-    if linkToPaper in cite.span['class']: # contains a link to the hardcopy
-        print cite.span.a
+searchForTPC(listofnames)
