@@ -13,7 +13,9 @@ accepted at your conference.
 from BeautifulSoup import BeautifulSoup
 from collections import namedtuple
 import urllib2
-
+#The hardcoded strings for tags
+paperContainer = "gs_r"
+linkToPaper = "gs_ggs"
 
 #Make a container type for the pc members
 Member = namedtuple('PCMember', ['name', 'institution'])
@@ -36,12 +38,21 @@ listofnames = [
 opener = urllib2.build_opener()
 opener.addheaders = [('User-agent', 'Mozilla/5.0')]
 
-url = "http://http://scholar.google.com/scholar?q=Kevin+Almeroth+University+of+California"
+url = "http://scholar.google.com/scholar?q=Kevin+Almeroth+University+of+California"
 page = opener.open(url)
 soup = BeautifulSoup(page)
 
-### Parse and find
-### Looks like google contains URLs in <cite> tags.
-### So for each cite tag on each page (10), print its contents (url)
-for cite in soup.findAll('gs_rt'):
-    print cite.text
+
+#print soup.prettify()
+#Parse and find the gs_r tags
+for cite in soup.findAll(name='div',attrs={"class" : paperContainer}):
+    #print cite.prettify()
+    print cite.div #contains the link to the paper page
+    #print cite.span #contains the link to the pdf hardcopy
+    if linkToPaper in cite.span['class']: # contains a link
+        print cite.span
+    #print cite.span.__dict__
+    #print cite.__dict__.keys()
+    print "----"
+    #TODO find the first subchild div gs_rt, get the name and the link out
+    #TODO if it has a 
