@@ -42,7 +42,7 @@ class LandingPage:
         <p>Ever tried to get a paper published only to be told to reference papers you know were written by the programme committee? 
         Need to suck up to get a paper accepted in your field?
         </p>
-        <p>Now with Cite The PC, it's never been easier to cite the programme committee! Simply enter the names of the committee into the box below, to get a returned list of the committee member's papers (with links).
+        <p>Now with Cite The PC, it's never been easier to cite the programme committee! Simply enter the names of the committee into the box below, to get a returned list of the committee members' papers (with links).
         </p>
         </div>
         """
