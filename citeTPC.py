@@ -31,27 +31,12 @@ opener.addheaders = [('User-agent', 'Mozilla/5.0')]
 #Make a container type for the pc members
 Paper = namedtuple('Paper', ['doi', 'hardlink'])
 
-#Who we are searching for
-listofnames = [
-    #"Kevin Almeroth University of California",
-    #"Sun-Ki Chai University of Hawaii",
-    #"Adrian David Cheok National University of Singapore",
-    #"Noshir Contractor Northwestern University",
-    #"Irfan Essa Georgia Institute of Technology",
-    #"David Lazer Northeastern/Harvard University",
-    "Dongman Lee KAIST",
-    "Ramesh Jain University of California",
-    #"Tom Malone Massachusetts Institute of Technology",
-    #"Kenji Mase Nagoya University",
-]
-
 def readNames():
     """
     returns a list of members to search for from standard in
     """
     import sys
     return sys.stdin.readlines()
-
 
 def createOutputPage(htmltags):
     """

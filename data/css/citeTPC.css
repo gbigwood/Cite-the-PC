@@ -3,3 +3,13 @@ body{font-family:Tahoma, Geneva, sans-serif;}
 body{font-family: "droid-serif-1","droid-serif-2", Verdana, Arial, Helvetica, sans-serif;}
 body{font-family:Georgia, serif}*/
 body{font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;}
+div.examplecode
+{
+    font-family: 'Courier New', Courier, 'Times New Roman';
+}
+
+div.membername
+{
+    font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
