@@ -18,6 +18,8 @@ Call like so:
 from BeautifulSoup import BeautifulSoup
 from collections import namedtuple
 import urllib2
+import re
+import cgi
 
 #The hardcoded strings for google scholar tags
 paperContainerString = "gs_r"
@@ -50,14 +52,26 @@ def createOutputPage(htmltags):
     print footer
     pass
 
+def formatMemberText(member):
+    """does some regular expression stuff to clean up the member text"""
+    print member
+    #member = re.sub('\t',' ',member)
+    member = re.sub('[\s\t]+',' ',member)
+    print member
+    member = member.replace(" ","+")
+    member = member.replace(",","")
+    member = member.replace("/","")
+    member = cgi.escape(member)
+    return member
+
 def searchForTPC(members):
     """takes a list of members, returns their papers"""
     outputstrings = []
     for member in members:
         outputstrings.append('<div class="member">')
         outputstrings.append('<div class="membername">%s</div>' % member)
+        member = formatMemberText(member)
         outputstrings.append('<ul>')
-        member = member.replace(" ","+")
         for paper in findMembersPapers(member):
             try:
                 outputstrings.append('<li>Paper:')
@@ -72,6 +86,7 @@ def searchForTPC(members):
                 pass
         outputstrings.append('</ul>')
         outputstrings.append('</div>')#close the member div
+    #print outputstrings
     return outputstrings
 
 def findMembersPapers(memberString):
@@ -79,6 +94,7 @@ def findMembersPapers(memberString):
     
     the urls come as """
     url = "http://scholar.google.com/scholar?q="+memberString
+    print url
     results = [] #the result papers go in here
     try:
         page = opener.open(url)

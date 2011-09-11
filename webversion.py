@@ -70,7 +70,7 @@ class LandingPage:
     <div class="submitform">
     <form action="results" method="post" >
         <p><h3>Enter the PC members below:</h3></p>
-        <textarea cols="60" rows="20" name="membernames"></textarea>
+        <textarea cols="100" rows="30" name="membernames"></textarea>
         <p><input type="submit" value="Find Papers"/></p>
     </form>
     </div>
@@ -84,6 +84,8 @@ class LandingPage:
         membernames = membernames.split(unichr(13))
         membernames = (member.strip("\n") for member in membernames)
         outputtext = []
+        #TODO do the conversion please: remove dodgy things like nonspaces
+        #TODO why does it fail on non unicode submissons?
         outputtext.append(self.getHeaderText(title="Results"))
         outputtext.append("""<h1>Papers to cite</h1>""")
         outputtext.append("\n".join(citeTPC.searchForTPC(membernames)))
@@ -103,6 +105,11 @@ if __name__ == '__main__':
                             'engine.autoreload_on':True,
                             })
         
+    conf = {'/': {
+        'tools.encode.on' : True,
+        'tools.decode.on' : True,
+                      }}
+
     conf = {'/css': {'tools.staticdir.on': True,
                       'tools.staticdir.dir': os.path.join(current_dir, 'data/css'),
                       }}
