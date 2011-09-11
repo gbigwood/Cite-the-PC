@@ -16,16 +16,21 @@ class LandingPage:
         """
         outputtext = []
         #header
-        outputtext.append("""
-        <html><head><title>Cite The PC</title>
-        <link rel="stylesheet" type="text/css" href="/css/citeTPC.css" media="screen" />
-        </head><body>""")
+        outputtext.append(self.getHeaderText())
         #main body
         outputtext.append(self.createOpeningMessage())
         outputtext.append(self.createLandingForm())
         #footer
         outputtext.append('</body></html>')
-        return "\n".join(outputtext)
+        return outputtext#cherrypy will join items for us
+
+    def getHeaderText(self):
+        """gets the page header"""
+        #TODO take an optional arguement for the title
+        return """
+        <html><head><title>Cite The PC</title>
+        <link rel="stylesheet" type="text/css" href="/css/citeTPC.css" media="screen" />
+        </head><body>"""
 
     def createOpeningMessage(self):
         """
@@ -77,7 +82,11 @@ class LandingPage:
         #handle the newline character
         membernames = membernames.split(unichr(13))
         membernames = (member.strip("\n") for member in membernames)
-        return citeTPC.searchForTPC(membernames)
+        outputtext = []
+        outputtext.append(self.getHeaderText())
+        outputtext.append("\n".join(citeTPC.searchForTPC(membernames)))
+        outputtext.append('</body></html>')
+        return outputtext
 
     submitMembers.exposed = True
     index.exposed = True
