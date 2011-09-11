@@ -2,7 +2,10 @@
 A program to obtain a list of all the papers that you need to cite to get
 accepted at your conference.
 
-Returns html 
+Takes a list of names from standard in, Returns html
+
+Call like so:
+< testinput python citeTPC.py
  __
 /  \        _____________
 |  |       /             \
@@ -41,6 +44,14 @@ listofnames = [
     #"Tom Malone Massachusetts Institute of Technology",
     #"Kenji Mase Nagoya University",
 ]
+
+def readNames():
+    """
+    returns a list of members to search for from standard in
+    """
+    import sys
+    return sys.stdin.readlines()
+
 
 def createOutputPage(htmltags):
     """
@@ -99,4 +110,6 @@ def findMembersPapers(memberString):
             results.append(p)
     return results
 
-createOutputPage(searchForTPC(listofnames))
+if __name__ == "__main__":
+    listofnames = readNames()
+    createOutputPage(searchForTPC(listofnames))
