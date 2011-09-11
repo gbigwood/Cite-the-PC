@@ -54,19 +54,23 @@ def searchForTPC(members):
     """takes a list of members, returns their papers"""
     outputstrings = []
     for member in members:
-        outputstrings.append('<p>')
         outputstrings.append('<div class="member">')
-        outputstrings.append( '<div class="membername">%s</div>' % member)
+        outputstrings.append('<div class="membername">%s</div>' % member)
+        outputstrings.append('<ul>')
         member = member.replace(" ","+")
         for paper in findMembersPapers(member):
             try:
-                outputstrings.append('<div class="paperdoi">%s</div>' % paper.doi)
+                outputstrings.append('<li>Paper:')
+                outputstrings.append('<span class="paperdoi">%s</span>' % paper.doi)
+                outputstrings.append('</li>')
                 if paper.hardlink:
-                    outputstrings.append('<div class="paperlink">%s</div>' % paper.hardlink)
+                    outputstrings.append('<li>Hardcopy:')
+                    outputstrings.append('<span class="paperlink">%s</span>' % paper.hardlink)
+                    outputstrings.append('</li>')
                 outputstrings.append('</br>')
             except:
                 pass
-        outputstrings.append('</p>')
+        outputstrings.append('</ul>')
         outputstrings.append('</div>')#close the member div
     return outputstrings
 
