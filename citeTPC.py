@@ -58,7 +58,7 @@ def createOutputPage(htmltags):
 def formatMemberText(member):
     """does some regular expression stuff to clean up the member text"""
     #print member.encode('latin-1')
-    member = member.encode('latin-1')
+    member = member.decode('latin-1')
     #member = re.sub('\t',' ',member)
     member = member.replace("\n","")
     member = re.sub('[\s\t]+',' ',member)
