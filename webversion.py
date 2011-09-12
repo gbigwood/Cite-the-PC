@@ -6,7 +6,6 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 import cherrypy
 import citeTPC
 
-
 class LandingPage:
     def index(self):
         return self.createWelcomePage()
@@ -103,12 +102,11 @@ if __name__ == '__main__':
                             'log.error_file': 'site.log',
                             'log.screen': True,
                             'engine.autoreload_on':True,
+                            'tools.encode.encoding':'Latin-1',
+                            'tools.encode.on' : True,
+                            'tools.decode.on' : True,
                             })
         
-    conf = {'/': {
-        'tools.encode.on' : True,
-        'tools.decode.on' : True,
-                      }}
 
     conf = {'/css': {'tools.staticdir.on': True,
                       'tools.staticdir.dir': os.path.join(current_dir, 'data/css'),

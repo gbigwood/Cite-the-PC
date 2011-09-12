@@ -38,6 +38,7 @@ def readNames():
     returns a list of members to search for from standard in
     """
     import sys
+    #return [s.decode('latin-1') for s in sys.stdin.readlines()]
     return sys.stdin.readlines()
 
 def createOutputPage(htmltags):
@@ -46,6 +47,7 @@ def createOutputPage(htmltags):
     """
     header = '<html><head><title>Papers to cite</title></head><body>'
     body= "\n".join(htmltags)
+    #body = "\n".join(s.encode('latin-1') for s in htmltags )
     footer = '</body></html>'
     print header
     print body
@@ -54,7 +56,8 @@ def createOutputPage(htmltags):
 
 def formatMemberText(member):
     """does some regular expression stuff to clean up the member text"""
-    print member
+    #print member.encode('latin-1')
+    #member = member.encode('latin-1')
     #member = re.sub('\t',' ',member)
     member = re.sub('[\s\t]+',' ',member)
     print member
@@ -62,6 +65,7 @@ def formatMemberText(member):
     member = member.replace(",","")
     member = member.replace("/","")
     member = cgi.escape(member)
+    print member
     return member
 
 def searchForTPC(members):
@@ -69,6 +73,8 @@ def searchForTPC(members):
     outputstrings = []
     for member in members:
         outputstrings.append('<div class="member">')
+        #outputstrings.append('<div class="membername">%s</div>' 
+        #%member.decode('latin-1'))
         outputstrings.append('<div class="membername">%s</div>' % member)
         member = formatMemberText(member)
         outputstrings.append('<ul>')
@@ -99,8 +105,8 @@ def findMembersPapers(memberString):
     try:
         page = opener.open(url)
         soup = BeautifulSoup(page)
-    except:#error
-        print "error with the search"
+    except Exception as inst:
+        print inst
     else:#if no error
         #print soup.prettify()
         #Parse and find the gs_r tags
