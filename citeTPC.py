@@ -38,8 +38,9 @@ def readNames():
     returns a list of members to search for from standard in
     """
     import sys
-    #return [s.decode('latin-1') for s in sys.stdin.readlines()]
-    return sys.stdin.readlines()
+    #print [s.decode('latin-1') for s in sys.stdin.readlines()]
+    return [s.decode('latin-1') for s in sys.stdin.readlines()]
+    #return sys.stdin.readlines()
 
 def createOutputPage(htmltags):
     """
@@ -57,8 +58,9 @@ def createOutputPage(htmltags):
 def formatMemberText(member):
     """does some regular expression stuff to clean up the member text"""
     #print member.encode('latin-1')
-    #member = member.encode('latin-1')
+    member = member.encode('latin-1')
     #member = re.sub('\t',' ',member)
+    member = member.replace("\n","")
     member = re.sub('[\s\t]+',' ',member)
     print member
     member = member.replace(" ","+")
