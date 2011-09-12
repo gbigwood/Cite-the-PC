@@ -84,9 +84,9 @@ def searchForTPC(members):
     for member in members:
         outputstrings.append('<div class="member">')
         member = formatMemberTextPrint(member)#for printing out
+        member = formatMemberText(member)
         #outputstrings.append('<div class="membername">%s</div>' %member.decode('latin-1'))
         outputstrings.append('<div class="membername">%s</div>' % member)
-        member = formatMemberText(member)
         print member
         outputstrings.append('<ul>')
         for paper in findMembersPapers(member):
