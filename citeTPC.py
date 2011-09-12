@@ -39,8 +39,8 @@ def readNames():
     """
     import sys
     #print [s.decode('latin-1') for s in sys.stdin.readlines()]
-    return [s.decode('latin-1') for s in sys.stdin.readlines()]
-    #return sys.stdin.readlines()
+    #return [s.decode('latin-1') for s in sys.stdin.readlines()]
+    return sys.stdin.readlines()
 
 def createOutputPage(htmltags):
     """
