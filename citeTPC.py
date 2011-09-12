@@ -55,19 +55,27 @@ def createOutputPage(htmltags):
     print footer
     pass
 
-def formatMemberText(member):
-    """does some regular expression stuff to clean up the member text"""
+def formatMemberTextPrint(member):
+    """does some regular expression stuff to clean up the member text for print"""
     #print member.encode('latin-1')
     #member = member.encode('latin-1')
     #member = re.sub('\t',' ',member)
     member = member.replace("\n","")
+    member = member.replace(",","")
+    member = member.replace("/"," ")
     member = re.sub('[\s\t]+',' ',member)
+    member = member.strip()
+    return member
+
+def formatMemberText(member):
+    """does some regular expression stuff to clean up the member text"""
+    member = cgi.escape(member)
+    #print member
+    member = member.decode('utf8')
+    print member
+    member = member.encode('ascii', 'xmlcharrefreplace')
     print member
     member = member.replace(" ","+")
-    member = member.replace(",","")
-    member = member.replace("/","")
-    member = cgi.escape(member)
-    print member
     return member
 
 def searchForTPC(members):
@@ -75,9 +83,11 @@ def searchForTPC(members):
     outputstrings = []
     for member in members:
         outputstrings.append('<div class="member">')
+        member = formatMemberTextPrint(member)#for printing out
         #outputstrings.append('<div class="membername">%s</div>' %member.decode('latin-1'))
         outputstrings.append('<div class="membername">%s</div>' % member)
         member = formatMemberText(member)
+        print member
         outputstrings.append('<ul>')
         for paper in findMembersPapers(member):
             try:
