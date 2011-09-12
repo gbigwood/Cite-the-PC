@@ -102,9 +102,10 @@ if __name__ == '__main__':
                             'log.error_file': 'site.log',
                             'log.screen': True,
                             'engine.autoreload_on':True,
-                            'tools.encode.encoding':'Latin-1',
                             'tools.encode.on' : True,
                             'tools.decode.on' : True,
+                            #'tools.encode.encoding':'Latin-1',
+                            'tools.encode.encoding':'utf8',
                             })
         
 
