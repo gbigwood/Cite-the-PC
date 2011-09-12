@@ -66,11 +66,8 @@ def formatMemberTextPrint(member):
     member = re.sub('[\s\t]+',' ',member)
     member = member.strip()
     member = cgi.escape(member)
-    #print member
     member = member.decode('utf8')
-    #print member
     member = member.encode('ascii', 'xmlcharrefreplace')
-    #print member
     return member
 
 def formatMemberText(member):
