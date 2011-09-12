@@ -62,7 +62,7 @@ def formatMemberText(member):
     #member = re.sub('\t',' ',member)
     member = member.replace("\n","")
     member = re.sub('[\s\t]+',' ',member)
-    print member
+    print repr(member)
     member = member.replace(" ","+")
     member = member.replace(",","")
     member = member.replace("/","")
