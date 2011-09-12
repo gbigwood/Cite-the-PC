@@ -65,16 +65,16 @@ def formatMemberTextPrint(member):
     member = member.replace("/"," ")
     member = re.sub('[\s\t]+',' ',member)
     member = member.strip()
+    member = cgi.escape(member)
+    #print member
+    member = member.decode('utf8')
+    #print member
+    member = member.encode('ascii', 'xmlcharrefreplace')
+    #print member
     return member
 
 def formatMemberText(member):
     """does some regular expression stuff to clean up the member text"""
-    member = cgi.escape(member)
-    #print member
-    member = member.decode('utf8')
-    print member
-    member = member.encode('ascii', 'xmlcharrefreplace')
-    print member
     member = member.replace(" ","+")
     return member
 
@@ -83,11 +83,12 @@ def searchForTPC(members):
     outputstrings = []
     for member in members:
         outputstrings.append('<div class="member">')
-        member = formatMemberTextPrint(member)#for printing out
-        member = formatMemberText(member)
-        #outputstrings.append('<div class="membername">%s</div>' %member.decode('latin-1'))
-        outputstrings.append('<div class="membername">%s</div>' % member)
         print member
+        member = formatMemberTextPrint(member)#for printing out
+        #outputstrings.append('<div class="membername">%s</div>' 
+        #%member.decode('latin-1'))
+        outputstrings.append('<div class="membername">%s</div>' % member)
+        member = formatMemberText(member)
         outputstrings.append('<ul>')
         for paper in findMembersPapers(member):
             try:
