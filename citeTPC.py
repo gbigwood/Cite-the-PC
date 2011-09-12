@@ -48,7 +48,7 @@ def createOutputPage(htmltags):
     """
     header = '<html><head><title>Papers to cite</title></head><body>'
     body= "\n".join(htmltags)
-    #body = "\n".join(s.decode('latin-1') for s in htmltags )
+    #body = "\n".join(s.encode('latin-1') for s in htmltags )
     footer = '</body></html>'
     print header
     print body
@@ -58,11 +58,11 @@ def createOutputPage(htmltags):
 def formatMemberText(member):
     """does some regular expression stuff to clean up the member text"""
     #print member.encode('latin-1')
-    member = member.decode('latin-1')
+    #member = member.encode('latin-1')
     #member = re.sub('\t',' ',member)
     member = member.replace("\n","")
     member = re.sub('[\s\t]+',' ',member)
-    print repr(member)
+    print member
     member = member.replace(" ","+")
     member = member.replace(",","")
     member = member.replace("/","")
@@ -75,9 +75,8 @@ def searchForTPC(members):
     outputstrings = []
     for member in members:
         outputstrings.append('<div class="member">')
-        #outputstrings.append('<div class="membername">%s</div>' 
-        #%member.decode('latin-1'))
-        outputstrings.append('<div class="membername">%r</div>' % member)
+        #outputstrings.append('<div class="membername">%s</div>' %member.decode('latin-1'))
+        outputstrings.append('<div class="membername">%s</div>' % member)
         member = formatMemberText(member)
         outputstrings.append('<ul>')
         for paper in findMembersPapers(member):
@@ -102,7 +101,7 @@ def findMembersPapers(memberString):
     
     the urls come as """
     url = "http://scholar.google.com/scholar?q="+memberString
-    print url
+    print repr(url)
     results = [] #the result papers go in here
     try:
         page = opener.open(url)
