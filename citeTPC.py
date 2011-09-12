@@ -48,7 +48,7 @@ def createOutputPage(htmltags):
     """
     header = '<html><head><title>Papers to cite</title></head><body>'
     #body= "\n".join(htmltags)
-    body = "\n".join(s.encode('latin-1') for s in htmltags )
+    body = "\n".join(s.decode('latin-1') for s in htmltags )
     footer = '</body></html>'
     print header
     print body
