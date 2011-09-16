@@ -21,6 +21,7 @@ The following python modules are also required:
 * beautiful soup
 
 These can (probably) be installed on your system using easyinstall:
+
 	`sudo easy_install cherrypy`
 
 Explanation:
@@ -41,17 +42,21 @@ Or perhaps an entire list of PC members and their affiliations:
 Usage:
 ============
 The testinput file includes the PC for ACM SIGCOMM 2011.
+
 Command line version:
 ---------------------
 (The command line version does not require cherrypy.)
 The following will output an html file of papers for you to read:
+
 	`< testinput python citeTPC.py > /tmp/papers.html`
 
 Web version:
 ------------
 To run the cherrypy webserver on your machine for use from a browser, simply run:
+
 	`python webversion.py`
 This will start the application which you can connect to in your browser at:
+
 	`127.0.0.1:8080`
 
 Results are displayed in the browser.
