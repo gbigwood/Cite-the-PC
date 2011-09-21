@@ -48,7 +48,10 @@ def createOutputPage(htmltags):
     takes the strings of the TPC results and makes a web page
     """
     header = '<html><head><title>Papers to cite</title></head><body>'
-    body= "\n".join(htmltags)
+    try:
+        body= "\n".join(htmltags)
+    except Exception as e:
+        print e
     #body = "\n".join(s.encode('latin-1') for s in htmltags )
     footer = '</body></html>'
     print header
@@ -104,11 +107,10 @@ def searchForTPC(members,cmd=False):
                     outputstrings.append('<span class="paperlink">%s</span>' % paper.hardlink)
                     outputstrings.append('</li>')
                 outputstrings.append('<li>BibTeX:')
-                outputstrings.append('<span class="bibtexlink"><a href="%s" title="BibTeX">%s</a></span>' % (getBibTex(paper.title[0],cmd), paper.title[0]) )
+                #outputstrings.append('<span class="bibtexlink"><a href="%s" title="BibTeX">%s</a></span>' % (getBibTex(paper.title[0],cmd), paper.title[0]) )
                 outputstrings.append('</li>')
                 outputstrings.append('</br>')
             except Exception as inst:
-                print inst
                 pass
         outputstrings.append('</ul>')
         outputstrings.append('</div>')#close the member div
@@ -212,7 +214,6 @@ to <kbd><a href="mailto:liinwwwa@ira.uka.de">liinwwwa@ira.uka.de</a></kbd>
 
     return result
 
-
 def findBibTeXlink(titleSearch, url):
     """find the link to use for getting the bibtex link"""
     values = {'query': titleSearch,
@@ -244,8 +245,7 @@ def findBibTeXlink(titleSearch, url):
     except:
         print "fail to find bibtex soup"
     return urllib.unquote(biblink['href'])
-    
+
 if __name__ == "__main__":
     listofnames = readNames()
     createOutputPage(searchForTPC(listofnames,cmd=True))
-
