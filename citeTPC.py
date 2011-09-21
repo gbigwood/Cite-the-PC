@@ -32,7 +32,7 @@ opener = urllib2.build_opener()
 opener.addheaders = [('User-agent', 'Mozilla/5.0')]
 
 #Make a container type for the pc members
-Paper = namedtuple('Paper', ['doi', 'hardlink'])
+Paper = namedtuple('Paper', ['doi', 'hardlink','title'])
 
 def readNames():
     """
@@ -81,12 +81,13 @@ def formatMemberText(member):
     member = member.replace(" ","+")
     return member
 
-def searchForTPC(members):
-    """takes a list of members, returns their papers"""
+def searchForTPC(members,cmd=False):
+    """takes a list of members, returns their papers
+    
+    cmd is whether or not we are calling from command line"""
     outputstrings = []
     for member in members:
         outputstrings.append('<div class="member">')
-        print member
         member = formatMemberTextPrint(member)#for printing out
         #outputstrings.append('<div class="membername">%s</div>' 
         #%member.decode('latin-1'))
@@ -102,8 +103,12 @@ def searchForTPC(members):
                     outputstrings.append('<li>Hardcopy:')
                     outputstrings.append('<span class="paperlink">%s</span>' % paper.hardlink)
                     outputstrings.append('</li>')
+                outputstrings.append('<li>BibTeX:')
+                outputstrings.append('<span class="bibtexlink"><a href="%s" title="BibTeX">%s</a></span>' % (getBibTex(paper.title[0],cmd), paper.title[0]) )
+                outputstrings.append('</li>')
                 outputstrings.append('</br>')
-            except:
+            except Exception as inst:
+                print inst
                 pass
         outputstrings.append('</ul>')
         outputstrings.append('</div>')#close the member div
@@ -115,7 +120,6 @@ def findMembersPapers(memberString):
     
     the urls come as """
     url = "http://scholar.google.com/scholar?q="+memberString
-    print repr(url)
     results = [] #the result papers go in here
     try:
         page = opener.open(url)
@@ -127,22 +131,27 @@ def findMembersPapers(memberString):
         #Parse and find the gs_r tags
         for cite in soup.findAll(name='div',attrs={"class" : paperContainerString}):
             if linkToPaperString in cite.span['class']: # contains a link to the hardcopy
-                p = Paper(cite.div.a, cite.span.a)#we know there will be two links with data
+                p = Paper(cite.div.a, cite.span.a,cite.div.a.contents)#we know there will be two links with data
             elif citationString in cite.span['class']: #its a citation not a paper
                 #print "skipping",cite.div
                 continue
             else:#no paper link
-                p = Paper(cite.div.a,None)
+                p = Paper(cite.div.a,None,cite.div.a.contents)
             results.append(p)
     return results
 
-def getBibTex(titleSearch):
+def getBibTex(titleSearch, cmd):
     """tries to obtain the bibtex for the paper title passed in"""
     url = 'http://liinwww.ira.uka.de/csbib'
     cgilink = findBibTeXlink(titleSearch, url)
     url = 'http://liinwww.ira.uka.de/'
-    bibtex = findBibTeX(url+cgilink)
-    return bibtex
+    if cmd:#its command line, get the link to his
+        return url+cgilink
+    else:#it's web, find the url
+        #TODO put this in seperate method so that our link in the browser calls his and returns it
+        #TODO return a reference to the webserver so that we get the link to parse it ourselves
+        #bibtex = findBibTeX(url+cgilink)
+        return url+cgilink
 
 def findBibTeX(url):
     """makes the cgi request and gets the bibtex data"""
@@ -236,10 +245,6 @@ def findBibTeXlink(titleSearch, url):
     return urllib.unquote(biblink['href'])
     
 if __name__ == "__main__":
-    #listofnames = readNames()
-    #createOutputPage(searchForTPC(listofnames))
+    listofnames = readNames()
+    createOutputPage(searchForTPC(listofnames,cmd=True))
 
-    #TODO look for the bibtex
-    stuff =  getBibTex('Bootstrapping opportunistic networks')
-    print repr(stuff)
-    
