@@ -7,7 +7,7 @@ accepted in your field?
 
 Now with Cite The PC, it's never been easier to cite the programme committee!
 Simply enter the names of the committee into the box below, to get a returned
-list of the committee members' papers (with links).
+list of the committee members' papers (with links and BibTeX).
 
 Requirements
 ============
