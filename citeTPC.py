@@ -83,6 +83,14 @@ def formatMemberText(member):
     """does some regular expression stuff to clean up the member text"""
     member = member.replace(" ","+")
     return member
+def formatBibTextLink(link):
+    """format the link for bibtex"""
+    try:
+        link = link.decode('utf8')#convert from utf8
+    except:
+        pass
+    link = link.encode('ascii', 'xmlcharrefreplace')#convert to ascii
+    return link
 
 def searchForTPC(members,cmd=False):
     """takes a list of members, returns their papers
@@ -107,7 +115,8 @@ def searchForTPC(members,cmd=False):
                     outputstrings.append('<span class="paperlink">%s</span>' % paper.hardlink)
                     outputstrings.append('</li>')
                 outputstrings.append('<li>BibTeX:')
-                #outputstrings.append('<span class="bibtexlink"><a href="%s" title="BibTeX">%s</a></span>' % (getBibTex(paper.title[0],cmd), paper.title[0]) )
+                outputstrings.append('<span class="bibtexlink"><a href="%s" title="BibTeX">%s</a></span>' % (
+                    formatBibTextLink(getBibTex(paper.title[0],cmd)), formatBibTextLink(paper.title[0])) )
                 outputstrings.append('</li>')
                 outputstrings.append('</br>')
             except Exception as inst:
@@ -153,8 +162,8 @@ def getBibTex(titleSearch, cmd):
         #get the bibtex
         #bibtex = findBibTeX(url+cgilink)
         #return a reference to the webserver so that we get the link to parse it ourselves
-        #return "/bibTeX/"+cgilink.encode("hex")# uses the cherrypy webserver
-        return url+cgilink
+        return "/bibTeX/"+cgilink.encode("hex")# uses the cherrypy webserver
+        #return url+cgilink
 
 def findBibTeX(url):
     """makes the cgi request and gets the bibtex data"""

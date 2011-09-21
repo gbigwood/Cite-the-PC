@@ -100,7 +100,7 @@ class LandingPage:
         print bibtex[0]
         return bibtex
 
-    #bibTeX.exposed = True
+    bibTeX.exposed = True
     results.exposed = True
     index.exposed = True
 
@@ -117,7 +117,6 @@ if __name__ == '__main__':
                             #'tools.encode.encoding':'Latin-1',
                             'tools.encode.encoding':'utf8',
                             })
-        
 
     conf = {'/css': {'tools.staticdir.on': True,
                       'tools.staticdir.dir': os.path.join(current_dir, 'data/css'),
