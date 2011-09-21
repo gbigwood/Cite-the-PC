@@ -83,14 +83,24 @@ class LandingPage:
         membernames = membernames.split(unichr(13))
         membernames = (member.strip("\n") for member in membernames)
         outputtext = []
-        #TODO do the conversion please: remove dodgy things like nonspaces
-        #TODO why does it fail on non unicode submissons?
         outputtext.append(self.getHeaderText(title="Results"))
         outputtext.append("""<h1>Papers to cite</h1>""")
         outputtext.append("\n".join(citeTPC.searchForTPC(membernames)))
         outputtext.append('</body></html>')
         return outputtext
 
+    def bibTeX(self, hexvalue=None):
+        """take the hex url and get the bibtex"""
+        #TODO make it format nicely
+
+        hexvalue = hexvalue.decode("hex")
+        url = 'http://liinwww.ira.uka.de'
+        bibtex = citeTPC.findBibTeX(url+hexvalue)
+        print bibtex
+        print bibtex[0]
+        return bibtex
+
+    #bibTeX.exposed = True
     results.exposed = True
     index.exposed = True
 

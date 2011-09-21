@@ -144,13 +144,14 @@ def getBibTex(titleSearch, cmd):
     """tries to obtain the bibtex for the paper title passed in"""
     url = 'http://liinwww.ira.uka.de/csbib'
     cgilink = findBibTeXlink(titleSearch, url)
-    url = 'http://liinwww.ira.uka.de/'
+    url = 'http://liinwww.ira.uka.de'
     if cmd:#its command line, get the link to his
         return url+cgilink
     else:#it's web, find the url
-        #TODO put this in seperate method so that our link in the browser calls his and returns it
-        #TODO return a reference to the webserver so that we get the link to parse it ourselves
+        #get the bibtex
         #bibtex = findBibTeX(url+cgilink)
+        #return a reference to the webserver so that we get the link to parse it ourselves
+        #return "/bibTeX/"+cgilink.encode("hex")# uses the cherrypy webserver
         return url+cgilink
 
 def findBibTeX(url):
