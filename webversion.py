@@ -96,11 +96,11 @@ class LandingPage:
         hexvalue = hexvalue.decode("hex")
         url = 'http://liinwww.ira.uka.de'
         bibtex = citeTPC.findBibTeX(url+hexvalue)
-        print bibtex
-        print bibtex[0]
+        for x in bibtex:
+            print x
         return bibtex
 
-    bibTeX.exposed = True
+    #bibTeX.exposed = True
     results.exposed = True
     index.exposed = True
 

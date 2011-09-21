@@ -162,8 +162,9 @@ def getBibTex(titleSearch, cmd):
         #get the bibtex
         #bibtex = findBibTeX(url+cgilink)
         #return a reference to the webserver so that we get the link to parse it ourselves
-        return "/bibTeX/"+cgilink.encode("hex")# uses the cherrypy webserver
-        #return url+cgilink
+        #TODO fix the way the bibtex is parsed to get around this
+        #return "/bibTeX/"+cgilink.encode("hex")# uses the cherrypy webserver
+        return url+cgilink
 
 def findBibTeX(url):
     """makes the cgi request and gets the bibtex data"""
@@ -220,7 +221,6 @@ to <kbd><a href="mailto:liinwwwa@ira.uka.de">liinwwwa@ira.uka.de</a></kbd>
     except:
         print "fail to find bibtex reference"
         print soup
-
     return result
 
 def findBibTeXlink(titleSearch, url):
