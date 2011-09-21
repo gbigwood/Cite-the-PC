@@ -172,43 +172,6 @@ def findBibTeX(url):
     headers = { 'User-Agent' : user_agent,
             'Referer' : 'http://liinwww.ira.uka.de/bibliography/index/html',
             }
-    testsoup="""<html>
-<head><title>Computer Science Bibliography Collection</title><link rel="stylesheet" href="/bibliography/bibliography.css" type="text/css" /></head>
-<body>
-<h1 class="page_title">The Collection of<br />Computer Science Bibliographies</h1><ul class="top_nav"><li><strong><a href="http://liinwww.ira.uka.de/bibliography/index.html" title="Home page of The Collection of Computer Science Bibliographies">Home</a></strong></li>
-<li><a href="http://liinwww.ira.uka.de/bibliography/index.html#about" title="About the collection">About</a></li>
-<li><a href="http://liinwww.ira.uka.de/bibliography/FAQ.html" title="Frequenly Asked Questions">FAQ</a></li>
-<li><a href="http://liinwww.ira.uka.de/bibliography/index.html#browse" title="Browsing the collection by topics">Browse</a></li>
-<li><a href="http://liinwww.ira.uka.de/bibliography/Contributing.html" title="Contributing new bibliographies to the collection">Add</a></li>
-<li><a href="http://liinwww.ira.uka.de/bibliography/Statistics.html" title="Current coverage statistics">Statistics</a></li>
-</ul>
-<p class="biblink_bar">From <a href="http://liinwww.ira.uka.de/bibliography/Misc/DBLP/index.html" title="See the source subcollection of this record and limit your search to DBLP">DBLP (2011)</a>:</p>
-<pre class="bibtex">@InProceedings{conf/wowmom/BigwoodH11,
-  title =	"<span class="b_title">Bootstrapping opportunistic networks using social
-		 roles</span>",
-  author =	"<a href="/csbib?query=%2Bau:BigwoodG*+%2Bau:Bigwood&amp;maxnum=200&amp;sort=year" title="Search for publications authored by Greg Bigwood">Greg Bigwood</a> and <a href="/csbib?query=%2Bau:HendersonT*+%2Bau:Henderson&amp;maxnum=200&amp;sort=year" title="Search for publications authored by Tristan Henderson">Tristan Henderson</a>",
-  publisher =	"IEEE",
-  year = 	"2011",
-  bibdate =	"2011-09-01",
-  bibsource =	"DBLP,
-		 <a href="http://dblp.uni-trier.de/db/conf/wowmom/wowmom2011.html#BigwoodH11">http://dblp.uni-trier.de/db/conf/wowmom/wowmom2011.html#BigwoodH11</a>",
-  booktitle =	"WOWMOM",
-  crossref =	"conf/wowmom/2011",
-  ISBN = 	"<a href="http://www.ubka.uni-karlsruhe.de/kvk.html?kataloge=alle&amp;autosubmit=true&amp;SB=978-1-4577-0352-2" title="Try searching KVK for the ISBN:978-1-4577-0352-2">978-1-4577-0352-2</a>",
-  pages =	"1--6",
-  URL =  	"<a href="http://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=5976314">http://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=5976314</a>",
-}
-</pre><p class="biblinks"><br /><br /><a href="http://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=5976314" title="Full text of the document">Unknown&nbsp;Format</a><br /><a href="http://ieeexplore.ieee.org/search/searchresult.jsp?queryText=bootstrapping+opportunistic+networks+using+social+roles+%3Cin%3E+ti&amp;coll1=ieeejrns&amp;coll2=ieejrns&amp;coll3=ieeecnfs&amp;coll4=ieecnfs&amp;coll5=ieeestds&amp;coll6=preprint&amp;py1=1950&amp;py2=2013&amp;SortField=Score&amp;SortOrder=desc&amp;ResultCount=15" title="Try searching IEEExplore for this document">Try IEEExplore</a></p><p class="footer">
-<a href="http://liinwww.ira.uka.de/bibliography/Copyright.html">Copyright</a> &copy; 1995-2011 Alf-Christian Achilles, All rights reserved.
-<br />
-This service is brought to you by Alf-Christian Achilles 
-and <a href="http://3miasto.net.pl/~ortylp">Paul Ortyl</a>
-<br />
-Please direct <a href="/bibliography/Comments.html" title="Send your comments via form.">comments</a> 
-to <kbd><a href="mailto:liinwwwa@ira.uka.de">liinwwwa@ira.uka.de</a></kbd>
-</p>
-</body></html>
-"""    
     result = ""
     try:
         page = opener.open(url)
