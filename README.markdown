@@ -13,7 +13,7 @@ Requirements
 ============
 It requires:
 
-* python 
+* python 2.7
 
 The following python modules are also required:
 
