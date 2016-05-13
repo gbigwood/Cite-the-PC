@@ -19,6 +19,7 @@ The following python modules are also required:
 
 * cherrypy
 * beautiful soup
+* pytest
 
 These can (probably) be installed on your system using easyinstall:
 

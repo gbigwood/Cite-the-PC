@@ -138,9 +138,16 @@ def findMembersPapers(memberString):
     except Exception as inst:
         print inst
     else:#if no error
-        #print soup.prettify()
-        #Parse and find the gs_r tags
-        for cite in soup.findAll(name='div',attrs={"class" : paperContainerString}):
+        #updates in place
+        parseMemberPage(soup, results)
+    return results
+
+def parseMemberPage(soup, results):
+    #print soup.prettify()
+    #Parse and find the gs_r tags
+    for cite in soup.findAll(name='div',attrs={"class" : paperContainerString}):
+        p = None
+        if cite.span is not None:
             if linkToPaperString in cite.span['class']: # contains a link to the hardcopy
                 p = Paper(cite.div.a, cite.span.a,cite.div.a.contents)#we know there will be two links with data
             elif citationString in cite.span['class']: #its a citation not a paper
@@ -148,8 +155,7 @@ def findMembersPapers(memberString):
                 continue
             else:#no paper link
                 p = Paper(cite.div.a,None,cite.div.a.contents)
-            results.append(p)
-    return results
+        results.append(p)
 
 def getBibTex(titleSearch, cmd):
     """tries to obtain the bibtex for the paper title passed in"""
