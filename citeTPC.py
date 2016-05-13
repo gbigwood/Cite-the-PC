@@ -24,6 +24,7 @@ import cgi
 
 #The hardcoded strings for google scholar tags
 paperContainerString = "gs_r"
+titleContainerString = "gs_rt"
 linkToPaperString = "gs_ggs"
 citationString = "gs_ctu"
 
@@ -136,18 +137,25 @@ def findMembersPapers(memberString):
         page = opener.open(url)
         soup = BeautifulSoup(page)
     except Exception as inst:
+        print "Server request error"
         print inst
     else:#if no error
-        #updates in place
-        parseMemberPage(soup, results)
+        #updates results in place
+        results.extend(parseMemberPage(soup))
     return results
 
-def parseMemberPage(soup, results):
+def parseMemberPage(soup):
     #print soup.prettify()
     #Parse and find the gs_r tags
+    results = []
     for cite in soup.findAll(name='div',attrs={"class" : paperContainerString}):
         p = None
         if cite.span is not None:
+            print cite
+            if cite.h3 is not None:
+                title = cite.h3[titleContainerString].contents
+                # TODO save the title here
+                print title
             if linkToPaperString in cite.span['class']: # contains a link to the hardcopy
                 p = Paper(cite.div.a, cite.span.a,cite.div.a.contents)#we know there will be two links with data
             elif citationString in cite.span['class']: #its a citation not a paper
@@ -155,7 +163,9 @@ def parseMemberPage(soup, results):
                 continue
             else:#no paper link
                 p = Paper(cite.div.a,None,cite.div.a.contents)
-        results.append(p)
+            if p:
+                results.append(p)
+    return results
 
 def getBibTex(titleSearch, cmd):
     """tries to obtain the bibtex for the paper title passed in"""
